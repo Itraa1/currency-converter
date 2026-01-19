@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc src/api.ts",
-    "dev": "tsx src/api.ts"
+    "start": "tsc  src/api.ts",
+    "dev": "tsx --env-file=.env src/database/supabase-connection.ts"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Itraa1/currency-converter#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
     "express": "^5.2.1",
     "typescript": "^5.9.3"
   },

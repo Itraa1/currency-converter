@@ -1,0 +1,1 @@
+console.log(process.env.supabase_Pass);
