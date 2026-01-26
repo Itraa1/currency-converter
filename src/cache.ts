@@ -1,5 +1,6 @@
 import { LRUCache } from "lru-cache";
 import { type Request, type Response} from "express"
+import {checkUserAuth} from "./userauth.js"
 
 const options = {
   max: 1,
@@ -8,7 +9,8 @@ const options = {
 
 const cacheGetCurrecncies = new LRUCache(options);
 
-export const cacheGetCurrecnciesMiddleware = (req :Request, res: Response, next:Function) => {
+export const cacheGetCurrecnciesMiddleware = async (req :Request, res: Response, next:Function) => {
+  
   const key = req.originalUrl;
   const cachedResponse = cacheGetCurrecncies.get(key);
 
