@@ -1,21 +1,26 @@
 import express from "express";
+import { type Request, type Response } from "express";
 import { PORT } from "./api-constants.js";
-import { currencies } from "./data/currencies-example.js";
 import { createCookie } from "./cookie.js";
+import { cacheGetCurrecnciesMiddleware } from "./cache.js";
+import { getAllCurrencies } from "./database/supabase-connection.js";
 
 const app = express();
 
-app.get("/api/currencies", async (req, res) => {
-  const userIdCookie: string = req.cookies?.userIdCookie;
-  if (userIdCookie) {
-  } else {
-    await createCookie(req, res);
-  }
-  res.json({ currencies: currencies });
-});
+app.get("/api/currencies",cacheGetCurrecnciesMiddleware,
+  async (req: Request, res: Response) => {
+    const userIdCookie: string = req.cookies?.userIdCookie;
+    if (userIdCookie) {
+    } else {
+      await createCookie(req, res);
+    }
+
+    res.json({ currencies: await getAllCurrencies() });
+  },
+);
 
 app.get("/api/rates", async (req, res) => {
-    const userIdCookie: string = req.cookies?.userIdCookie;
+  const userIdCookie: string = req.cookies?.userIdCookie;
   if (userIdCookie) {
   } else {
     await createCookie(req, res);
@@ -26,7 +31,7 @@ app.get("/api/rates", async (req, res) => {
 });
 
 app.get("api/user", async (req, res) => {
-    const userIdCookie: string = req.cookies?.userIdCookie;
+  const userIdCookie: string = req.cookies?.userIdCookie;
   if (userIdCookie) {
   } else {
     await createCookie(req, res);
@@ -35,7 +40,7 @@ app.get("api/user", async (req, res) => {
 });
 
 app.post("/api/user", async (req, res) => {
-    const userIdCookie: string = req.cookies?.userIdCookie;
+  const userIdCookie: string = req.cookies?.userIdCookie;
   if (userIdCookie) {
   } else {
     await createCookie(req, res);

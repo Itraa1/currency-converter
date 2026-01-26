@@ -22,11 +22,15 @@
   "homepage": "https://github.com/Itraa1/currency-converter#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
+    "axios": "^1.13.3",
     "express": "^5.2.1",
+    "lru-cache": "^11.2.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/express": "^5.0.6",
+    "@types/lru-cache": "^7.10.9",
     "nodemon": "^3.1.11",
     "tsx": "^4.21.0"
   }

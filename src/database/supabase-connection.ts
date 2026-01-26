@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { getCurrencies } from "../exchange-api.js";
 
 // if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
 const supabase = createClient(
@@ -13,10 +14,35 @@ export async function createUser(): Promise<string> {
     .select("user_id");
   if (data) {
     return data[0]?.user_id;
+  } else {
+    throw new Error("user creation error");
   }
-  throw new Error("user creation error")
-  
 }
 
+export async function getAllCurrencies() {
+  const { data, error } = await supabase.from("currencies").select("code");
 
-// }
+  if (data) {
+    // console.log(data);
+    const currencyList = data.map((dataElement) => {
+      return dataElement.code;
+    });
+    console.log(currencyList);
+    return currencyList;
+  } else {
+    console.log(error);
+  }
+}
+
+async function insertCurrencies() {
+  const currencies = await getCurrencies();
+
+  currencies.forEach(async (currency) => {
+    console.log(currency);
+    const { error } = await supabase
+      .from("currencies")
+      .insert({ code: currency });
+    if (error) console.log(error);
+  });
+}
+
