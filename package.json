@@ -23,12 +23,14 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
     "axios": "^1.13.3",
+    "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "lru-cache": "^11.2.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/axios": "^0.9.36",
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
     "@types/lru-cache": "^7.10.9",
     "nodemon": "^3.1.11",

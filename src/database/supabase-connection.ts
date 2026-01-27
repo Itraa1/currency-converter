@@ -19,6 +19,18 @@ export async function createUser(): Promise<string> {
   }
 }
 
+export async function getUser(user_id: string) {
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .eq("user_id", user_id);
+
+  console.log(data);
+  if (data) {
+    return data[0];
+  }
+}
+
 export async function getAllCurrencies() {
   const { data, error } = await supabase.from("currencies").select("code");
 
@@ -45,4 +57,3 @@ async function insertCurrencies() {
     if (error) console.log(error);
   });
 }
-
