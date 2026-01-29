@@ -15,12 +15,14 @@ app.get(
   checkUserAuth,
   cacheGetCurrecnciesMiddleware,
   async (req: Request, res: Response) => {
+    console.log("Основной метод")
     res.json({ currencies: await getAllCurrencies() });
   },
 );
 
-app.get("/api/rates", async (req, res) => {
-  // await checkUserAuth(req,res);
+app.get("/api/rates",checkUserAuth, async (req, res) => {
+   const base = req.query.base;
+   //const targets :string = req.query.targets
   res.json(); //возвращает рейты для конкретной валюты; Параметры (в query запроса):
   // ● base - базовая валюта; если параметр base не указан - он должен браться из настроек юзера. Если это первый запрос вообще - то базовой валютой для юзера установить валюту USD
   // ● targets - массив валют через запятую (например targets=EUR,GBP,JPY)

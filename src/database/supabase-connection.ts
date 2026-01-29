@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient,type PostgrestError } from "@supabase/supabase-js";
 import { getCurrencies } from "../exchange-api.js";
 
 // if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
@@ -7,16 +7,16 @@ const supabase = createClient(
   process.env.SUPABASE_KEY ?? " ",
 );
 
-export async function createUser(): Promise<string> {
+export async function createUser() {
   const { data, error } = await supabase
     .from("users")
     .insert({ base_currency: "USD" })
-    .select("user_id");
+    .select()
+    .single();
   if (data) {
-    return data[0]?.user_id;
-  } else {
-    throw new Error("user creation error");
+    return data;
   }
+    return error;  
 }
 
 export async function getUser(user_id: string) {
@@ -25,10 +25,18 @@ export async function getUser(user_id: string) {
     .select()
     .eq("user_id", user_id);
 
-  console.log(data);
-  if (data) {
-    return data[0];
-  }
+  //console.log(data);
+  
+  return data ? data[0] : error 
+}
+
+export async function checkUserExist(user_id: string):Promise<boolean>{
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .eq("user_id", user_id);
+
+  return data ? true : false;
 }
 
 export async function getAllCurrencies() {
