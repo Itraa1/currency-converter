@@ -1,10 +1,9 @@
 import { LRUCache } from "lru-cache";
 import { type Request, type Response} from "express"
-import {checkUserAuth} from "./userauth.js"
 
 const options = {
   max: 1,
-  ttl: 1000 * 60 * 5,
+  ttl: 1000 * 60 * 60,
 };
 
 const cacheGetCurrecncies = new LRUCache(options);
