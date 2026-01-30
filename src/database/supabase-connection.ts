@@ -47,7 +47,7 @@ export async function getAllCurrencies() {
     const currencyList = data.map((dataElement) => {
       return dataElement.code;
     });
-    console.log(currencyList);
+    //console.log(currencyList);
     return currencyList;
   } else {
     console.log(error);

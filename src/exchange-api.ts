@@ -2,8 +2,8 @@ import axios from "axios";
 
 const exchangerate_api = axios;
 
-async function getCurrenciesExchange(){
-    const response = await exchangerate_api.get(`https://v6.exchangerate-api.com/v6/${process.env.EXCHANGERATE_KEY}/latest/USD`)
+export async function getCurrencyExchange(currency:string){
+    const response = await exchangerate_api.get(`https://v6.exchangerate-api.com/v6/${process.env.EXCHANGERATE_KEY}/latest/${currency}`)
     console.log(response.data)
     return response.data
 }

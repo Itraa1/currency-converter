@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc  src/api.ts",
-    "dev": "tsx --env-file=.env src/api.ts"
+    "start": "tsc  src/server.ts",
+    "dev": "tsx --env-file=.env src/server.ts"
   },
   "repository": {
     "type": "git",
