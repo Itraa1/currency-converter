@@ -1,5 +1,5 @@
 import { createClient, type PostgrestError } from "@supabase/supabase-js";
-import { getCurrencies } from "../exchange-api.js";
+import { getCurrencies } from "../exchange_api.js";
 import { LRUCache } from "lru-cache";
 
 const cacheOptions = {
@@ -9,12 +9,12 @@ const cacheOptions = {
 
 const cacheGetCurrecnciesDB = new LRUCache(cacheOptions);
 
-// if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
 const supabase = createClient(
   process.env.SUPABASE_URL ?? " ",
   process.env.SUPABASE_KEY ?? " ",
 );
 
+//User
 export async function createUser(): Promise<User | PostgrestError | null> {
   const { data, error } = await supabase
     .from("users")
@@ -32,8 +32,6 @@ export async function getUser(user_id: string) {
     .from("users")
     .select()
     .eq("user_id", user_id);
-
-  //console.log(data);
 
   return data ? data[0] : error;
 }
@@ -70,19 +68,15 @@ export async function getAllCurrencies() {
   const cachedResponse = cacheGetCurrecnciesDB.get("currencies");
 
   if (cachedResponse) {
-    console.log("отправка кешированных данных");
     return cachedResponse;
   } else {
     const { data, error } = await supabase.from("currencies").select("code");
 
     if (data) {
-      // console.log(data);
-      const currencyList:string[] = data.map((dataElement) => {
+      const currencyList: string[] = data.map((dataElement) => {
         return dataElement.code;
       });
-      //console.log(currencyList);
-      console.log("кеширование");
-      cacheGetCurrecnciesDB.set("currencies",currencyList);
+      cacheGetCurrecnciesDB.set("currencies", currencyList);
       return currencyList;
     } else {
       console.log(error);
@@ -90,6 +84,39 @@ export async function getAllCurrencies() {
   }
 }
 
+//caching request in DB
+export async function checkCacheRatesRequest(
+  base_currency: string,
+  targets: string[],
+) {
+  const { data, error } = await supabase
+    .from("cache_rates_query")
+    .select("response")
+    .eq("request", base_currency.toString() + targets.toString())
+    .gt("expires_at", new Date().toISOString())
+    .single();
+
+  return data ? JSON.parse(data.response) : null;
+}
+
+export async function cachingRatesRequest(
+  base_currency: string,
+  targets: string[],
+  rates: Rates,
+) {
+  const expiresAt = new Date();
+  expiresAt.setHours(expiresAt.getHours() + 24);
+
+  const { error } = await supabase.from("cache_rates_query").insert({
+    request: base_currency.toString() + targets.toString(),
+    response: JSON.stringify(rates),
+    expires_at: expiresAt.toISOString(),
+  });
+  console.log(error);
+}
+
+
+//adding currencies to the database
 async function insertCurrencies() {
   const currencies = await getCurrencies();
 
@@ -98,7 +125,8 @@ async function insertCurrencies() {
     const { error } = await supabase
       .from("currencies")
       .insert({ code: currency });
-    if (error) console.log(error);
+    console.log(error);
   });
 }
 
+await insertCurrencies()
