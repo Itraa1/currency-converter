@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { getUser } from "../database/supabase-connection.js";
+import { getUser } from "../database/supabase_connection.js";
 
 export async function sendUserInfo(req: Request, res: Response) {
   try {

@@ -1,6 +1,6 @@
 import {type Request,type Response } from "express";
 import { isCurrencyExist } from "../error_filtering.js";
-import {updateUser} from "../database/supabase-connection.js";
+import {updateUser} from "../database/supabase_connection.js";
 
 export async function updateUserInfo(req:Request, res:Response) {
   try {
@@ -9,13 +9,13 @@ export async function updateUserInfo(req:Request, res:Response) {
 
     if (!newBaseCurrency && !newFavorites) {
       return res.status(400).json({
-        error: "Укажите base_currency или favorites для обновления",
+        error: "Specify base_currency or favorites to update",
       });
     }
 
     if (newBaseCurrency && !(await isCurrencyExist(newBaseCurrency))) {
       return res.status(400).json({
-        error: "Указанная валюта не поддерживается",
+        error: "The specified currency is not supported.",
       });
     }
 
@@ -23,7 +23,7 @@ export async function updateUserInfo(req:Request, res:Response) {
       for (const currency of newFavorites) {
         if (!(await isCurrencyExist(currency))) {
           return res.status(400).json({
-            error: `Валюта "${currency}" не поддерживается`,
+            error: `Currency: "${currency}" incorrect`,
           });
         }
       }

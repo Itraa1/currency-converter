@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
 import { createCookie } from "../controllers/cookie.js";
-import { checkUserExist, getUser } from "../database/supabase-connection.js";
+import { checkUserExist, getUser } from "../database/supabase_connection.js";
 
 export async function checkUserAuth(
   req: Request,

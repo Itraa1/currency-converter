@@ -1,4 +1,4 @@
-import { getAllCurrencies } from "./database/supabase-connection.js";
+import { getAllCurrencies } from "./database/supabase_connection.js";
 
 export async function filteringTargetsErrors(
   targets: string,

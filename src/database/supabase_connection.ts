@@ -78,8 +78,6 @@ export async function getAllCurrencies() {
       });
       cacheGetCurrecnciesDB.set("currencies", currencyList);
       return currencyList;
-    } else {
-      console.log(error);
     }
   }
 }
@@ -112,7 +110,7 @@ export async function cachingRatesRequest(
     response: JSON.stringify(rates),
     expires_at: expiresAt.toISOString(),
   });
-  console.log(error);
+  
 }
 
 
@@ -121,11 +119,9 @@ async function insertCurrencies() {
   const currencies = await getCurrencies();
 
   currencies.forEach(async (currency) => {
-    console.log(currency);
     const { error } = await supabase
       .from("currencies")
       .insert({ code: currency });
-    console.log(error);
   });
 }
 

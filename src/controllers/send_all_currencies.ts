@@ -1,7 +1,7 @@
-import { getAllCurrencies } from "../database/supabase-connection.js";
-import { type Response } from "express";
+import { getAllCurrencies } from "../database/supabase_connection.js";
+import { type Request,type Response } from "express";
 
-export async function sendAllCurrencies(res: Response) {
+export async function sendAllCurrencies(req:Request,res: Response) {
   try {
     res.json({ currencies: await getAllCurrencies() });
   } catch (error) {

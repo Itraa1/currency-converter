@@ -3,7 +3,7 @@ import { filteringTargetsErrors, isCurrencyExist } from "../error_filtering.js";
 import {
   checkCacheRatesRequest,
   cachingRatesRequest,
-} from "../database/supabase-connection.js";
+} from "../database/supabase_connection.js";
 import { getCurrencyExchange } from "../exchange_api.js";
 
 export async function sendRates(req: Request, res: Response) {
