@@ -6,9 +6,9 @@ import {
   cacheGetRatesMiddleware,
 } from "./middlewares/cache_middleware.js";
 import { sendAllCurrencies } from "./controllers/send_all_currencies.js";
-import { sendRates} from "./controllers/send_rates.js"
-import {sendUserInfo} from "./controllers/send_user_info.js"
-import {updateUserInfo} from "./controllers/update_user_info.js"
+import { sendRates } from "./controllers/send_rates.js";
+import { sendUserInfo } from "./controllers/send_user_info.js";
+import { updateUserInfo } from "./controllers/update_user_info.js";
 
 const PORT = 3000;
 const app = express();
@@ -22,16 +22,11 @@ app.get(
   sendAllCurrencies,
 );
 
-app.get(
-  "/api/rates",
-  checkUserAuth,
-  cacheGetRatesMiddleware,
-  sendRates,
-);
+app.get("/api/rates", checkUserAuth, cacheGetRatesMiddleware, sendRates);
 
-app.get("/api/user", checkUserAuth,sendUserInfo );
+app.get("/api/user", checkUserAuth, sendUserInfo);
 
-app.post("/api/user", checkUserAuth,updateUserInfo );
+app.post("/api/user", checkUserAuth, updateUserInfo);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT:${PORT}`);

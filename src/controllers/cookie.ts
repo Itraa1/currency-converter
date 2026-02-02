@@ -4,7 +4,7 @@ import { type Request, type Response } from "express";
 
 export async function createCookie(req: Request, res: Response) {
   const newUser = await createUser();
-  if(newUser instanceof PostgrestError){
+  if (newUser instanceof PostgrestError) {
     return res.json(newUser);
   }
   if (newUser && newUser.user_id) {

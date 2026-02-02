@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc src/server.ts",
-    "dev": "tsx --env-file=.env src/server.ts"
+    "dev": "tsx --env-file=.env src/server.ts",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -25,15 +26,22 @@
     "axios": "^1.13.3",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
+    "jiti": "^2.6.1",
     "lru-cache": "^11.2.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@types/axios": "^0.9.36",
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
     "@types/lru-cache": "^7.10.9",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
     "nodemon": "^3.1.11",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript-eslint": "^8.54.0"
   }
 }

@@ -7,7 +7,7 @@ export async function sendUserInfo(req: Request, res: Response) {
     if (userId) {
       res.json(await getUser(userId));
     }
-  } catch (error) {
+  } catch  {
     res.status(500).json({ error: "Server error" });
   }
 }

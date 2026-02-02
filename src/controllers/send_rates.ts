@@ -45,7 +45,7 @@ export async function sendRates(req: Request, res: Response) {
       await getCurrencyExchange(base_currency);
     const rates: Rates = {};
     if (apiResponseAllCurrencyExchange.result === "success") {
-      for (let target of filteredTargets) {
+      for (const target of filteredTargets) {
         rates[target] = apiResponseAllCurrencyExchange.conversion_rates[target];
       }
     } else {
@@ -57,7 +57,7 @@ export async function sendRates(req: Request, res: Response) {
     cachingRatesRequest(base_currency, filteredTargets, rates);
 
     res.json(rates);
-  } catch (error) {
+  } catch  {
     res.status(500).json({ error: "Server error" });
   }
 }

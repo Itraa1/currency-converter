@@ -37,7 +37,7 @@ export async function getUser(user_id: string) {
 }
 
 export async function checkUserExist(user_id: string): Promise<boolean> {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("users")
     .select()
     .eq("user_id", user_id);
@@ -70,7 +70,7 @@ export async function getAllCurrencies() {
   if (cachedResponse) {
     return cachedResponse;
   } else {
-    const { data, error } = await supabase.from("currencies").select("code");
+    const { data } = await supabase.from("currencies").select("code");
 
     if (data) {
       const currencyList: string[] = data.map((dataElement) => {
@@ -87,7 +87,7 @@ export async function checkCacheRatesRequest(
   base_currency: string,
   targets: string[],
 ) {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("cache_rates_query")
     .select("response")
     .eq("request", base_currency.toString() + targets.toString())
@@ -105,24 +105,22 @@ export async function cachingRatesRequest(
   const expiresAt = new Date();
   expiresAt.setHours(expiresAt.getHours() + 24);
 
-  const { error } = await supabase.from("cache_rates_query").insert({
+  await supabase.from("cache_rates_query").insert({
     request: base_currency.toString() + targets.toString(),
     response: JSON.stringify(rates),
     expires_at: expiresAt.toISOString(),
   });
-  
 }
-
 
 //adding currencies to the database
 async function insertCurrencies() {
   const currencies = await getCurrencies();
 
   currencies.forEach(async (currency) => {
-    const { error } = await supabase
+    await supabase
       .from("currencies")
       .insert({ code: currency });
   });
 }
 
-await insertCurrencies()
+await insertCurrencies();

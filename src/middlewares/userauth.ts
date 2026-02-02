@@ -12,7 +12,6 @@ export async function checkUserAuth(
     if (!(await checkUserExist(userIdCookie))) {
       return res.status(400).json({ error: "User does not exist" });
     } else {
-
       req.user = await getUser(userIdCookie);
       next();
     }

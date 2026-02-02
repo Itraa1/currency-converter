@@ -1,8 +1,8 @@
-import {type Request,type Response } from "express";
+import { type Request, type Response } from "express";
 import { isCurrencyExist } from "../error_filtering.js";
-import {updateUser} from "../database/supabase_connection.js";
+import { updateUser } from "../database/supabase_connection.js";
 
-export async function updateUserInfo(req:Request, res:Response) {
+export async function updateUserInfo(req: Request, res: Response) {
   try {
     const newBaseCurrency = req.body.base_currency;
     const newFavorites = req.body.favorites;
@@ -36,7 +36,7 @@ export async function updateUserInfo(req:Request, res:Response) {
     );
 
     res.json(updatedUser);
-  } catch (error) {
+  } catch  {
     res.status(500).json({ error: "Server error" });
   }
 }
