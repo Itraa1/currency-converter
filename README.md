@@ -34,7 +34,7 @@ SUPABASE_KEY = supabase_key
 #exchangerate-api
 EXCHANGERATE_KEY = exchangerate-api_key
 ```
-## Настройте БД supabse
+## Настройте БД supabase
 
 Необходимо создать 3 таблицы:
 
